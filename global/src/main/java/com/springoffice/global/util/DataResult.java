@@ -27,6 +27,10 @@ public class DataResult<D> {
         return new DataResult<>(200, message, data);
     }
 
+    public static <D> DataResult<D> ok(String message) {
+        return new DataResult<>(200, message, null);
+    }
+
     public static <D> DataResult<D> error(String message, D data) {
         return new DataResult<>(400, message, data);
     }
