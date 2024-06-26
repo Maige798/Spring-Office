@@ -32,4 +32,22 @@ public class UserServiceImpl implements UserService {
         }
         return DataResult.ok("User创建成功", user);
     }
+
+    @Override
+    public DataResult<User> getUserById(Integer id) {
+        User user = userMapper.selectById(id);
+        if (user == null) {
+            return DataResult.error("User查询失败，id:" + id + "不存在", null);
+        }
+        return DataResult.ok("User查询成功", user);
+    }
+
+    @Override
+    public DataResult<User> updateUser(User user) {
+        int resultValue = userMapper.updateById(user);
+        if (resultValue <= 0) {
+            return DataResult.error("User更新失败", user);
+        }
+        return DataResult.ok("User更新成功", user);
+    }
 }

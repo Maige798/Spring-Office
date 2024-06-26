@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 public class User {
     private Integer id;
     private String name;
+    @JsonProperty("is_admin")
     private Integer isAdmin;
     private String photo;
     private Integer sex;

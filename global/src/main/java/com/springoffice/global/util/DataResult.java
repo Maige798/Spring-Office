@@ -13,6 +13,9 @@ public class DataResult<D> {
     private D data;
 
     public D unwrap() {
+        if (data == null) {
+            System.err.println(this + ".data的值为null!");
+        }
         return data;
     }
 
@@ -26,5 +29,9 @@ public class DataResult<D> {
 
     public static <D> DataResult<D> error(String message, D data) {
         return new DataResult<>(400, message, data);
+    }
+
+    public static <D> DataResult<D> error(String message) {
+        return new DataResult<>(400, message, null);
     }
 }
