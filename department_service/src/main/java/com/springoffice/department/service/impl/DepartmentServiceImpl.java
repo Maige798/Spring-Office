@@ -3,6 +3,8 @@ package com.springoffice.department.service.impl;
 import com.springoffice.department.client.UserClient;
 import com.springoffice.department.entity.Department;
 import com.springoffice.department.entity.User;
+import com.springoffice.department.entity.json.AddMemberJson;
+import com.springoffice.department.entity.json.UserDeptJson;
 import com.springoffice.department.mapper.DepartmentMapper;
 import com.springoffice.department.service.DepartmentService;
 import com.springoffice.global.util.DataResult;
@@ -48,5 +50,19 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DataResult<List<User>> getDepartmentMembers(Integer id) {
         return userClient.getUser(id);
+    }
+
+    @Override
+    public DataResult<User> addMember(AddMemberJson json) {
+        User user = userClient.getUserById(json.getMemberId()).unwrap();
+        if (user == null) {
+            return DataResult.error("账号:" + json.getMemberId() + "不存在，添加成员失败");
+        }
+        if (user.hasDepartment()) {
+            return DataResult.error("账号:" + json.getMemberId() + "已经有部门了，添加成员失败");
+        }
+        userClient.updateUserDepartment(new UserDeptJson(json.getMemberId(), json.getDeptId()));
+        User result = userClient.getUserById(json.getMemberId()).unwrap();
+        return DataResult.ok("添加成员成功", result);
     }
 }

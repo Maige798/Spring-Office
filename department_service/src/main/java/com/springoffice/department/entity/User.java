@@ -29,4 +29,8 @@ public class User {
     private Integer roleId;
     @JsonProperty("dept_id")
     private Integer deptId;
+
+    public boolean hasDepartment() {
+        return deptId != null && !deptId.equals(0);
+    }
 }
