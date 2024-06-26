@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AddMemberJson {
+public class ChangeMemberJson {
     @JsonProperty("dept_id")
     private Integer deptId;
     @JsonProperty("member_id")

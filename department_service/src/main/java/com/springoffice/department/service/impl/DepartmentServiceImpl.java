@@ -3,7 +3,7 @@ package com.springoffice.department.service.impl;
 import com.springoffice.department.client.UserClient;
 import com.springoffice.department.entity.Department;
 import com.springoffice.department.entity.User;
-import com.springoffice.department.entity.json.AddMemberJson;
+import com.springoffice.department.entity.json.ChangeMemberJson;
 import com.springoffice.department.entity.json.UserDeptJson;
 import com.springoffice.department.mapper.DepartmentMapper;
 import com.springoffice.department.service.DepartmentService;
@@ -53,7 +53,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public DataResult<User> addMember(AddMemberJson json) {
+    public DataResult<User> addMember(ChangeMemberJson json) {
         User user = userClient.getUserById(json.getMemberId()).unwrap();
         if (user == null) {
             return DataResult.error("账号:" + json.getMemberId() + "不存在，添加成员失败");

@@ -2,7 +2,7 @@ package com.springoffice.department.controller;
 
 import com.springoffice.department.entity.Department;
 import com.springoffice.department.entity.User;
-import com.springoffice.department.entity.json.AddMemberJson;
+import com.springoffice.department.entity.json.ChangeMemberJson;
 import com.springoffice.department.service.DepartmentService;
 import com.springoffice.global.util.DataResult;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +37,7 @@ public class DepartmentController {
     }
 
     @PutMapping("/members/add")
-    public DataResult<User> addMember(@RequestBody AddMemberJson json) {
+    public DataResult<User> addMember(@RequestBody ChangeMemberJson json) {
         return departmentService.addMember(json);
     }
 }

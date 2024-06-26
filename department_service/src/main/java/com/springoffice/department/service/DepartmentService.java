@@ -2,7 +2,7 @@ package com.springoffice.department.service;
 
 import com.springoffice.department.entity.Department;
 import com.springoffice.department.entity.User;
-import com.springoffice.department.entity.json.AddMemberJson;
+import com.springoffice.department.entity.json.ChangeMemberJson;
 import com.springoffice.global.util.DataResult;
 
 import java.util.List;
@@ -16,5 +16,7 @@ public interface DepartmentService {
 
     DataResult<List<User>> getDepartmentMembers(Integer id);
 
-    DataResult<User> addMember(AddMemberJson json);
+    DataResult<User> addMember(ChangeMemberJson json);
+
+
 }
