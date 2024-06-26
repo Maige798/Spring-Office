@@ -20,13 +20,11 @@ public class UserController {
 
     @PostMapping("/register/normal")
     public DataResult<User> normalRegister(@RequestBody User user) {
-        System.out.println(user);
         return userService.register(user, false);
     }
 
     @PostMapping("/register/admin")
     public DataResult<User> adminRegister(@RequestBody User user) {
-        System.out.println(user);
         return userService.register(user, true);
     }
 

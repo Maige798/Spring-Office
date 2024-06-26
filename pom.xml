@@ -9,6 +9,7 @@
         <module>feign_api</module>
         <module>gateway_service</module>
         <module>role-service</module>
+        <module>department_service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -2,8 +2,10 @@ package com.springoffice.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.springoffice.global.util.DataResult;
+import com.springoffice.user.client.DepartmentClient;
 import com.springoffice.user.entity.Login;
 import com.springoffice.user.entity.User;
+import com.springoffice.user.entity.client.Department;
 import com.springoffice.user.mapper.UserMapper;
 import com.springoffice.user.service.LoginService;
 import com.springoffice.user.service.UserService;
@@ -19,6 +21,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Resource
     private LoginService loginService;
+    @Resource
+    private DepartmentClient departmentClient;
 
     @Override
     @Transactional
@@ -30,7 +34,15 @@ public class UserServiceImpl implements UserService {
             return DataResult.error("User创建失败", null);
         }
         if (!loginService.savePassword(new Login(user)).success()) {
-            return DataResult.error("User创建失败，密码保存失败", null);
+            return DataResult.error("User密码保存失败", null);
+        }
+        if (isAdmin) {
+            Department department = departmentClient.createDepartment(new Department(user)).unwrap();
+            if (department == null) {
+                return DataResult.error("User创建部门失败", user);
+            }
+            user.setDeptId(department.getId());
+            userMapper.updateById(user);
         }
         return DataResult.ok("User创建成功", user);
     }
