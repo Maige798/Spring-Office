@@ -65,4 +65,18 @@ public class DepartmentServiceImpl implements DepartmentService {
         User result = userClient.getUserById(json.getMemberId()).unwrap();
         return DataResult.ok("添加成员成功", result);
     }
+
+    @Override
+    public DataResult<User> removeMember(ChangeMemberJson json) {
+        User user = userClient.getUserById(json.getMemberId()).unwrap();
+        if (user == null) {
+            return DataResult.error("账号:" + json.getMemberId() + "不存在，移除成员失败");
+        }
+        if (!user.getDeptId().equals(json.getDeptId())) {
+            return DataResult.error("账号:" + json.getMemberId() + "不属于该部门，移除成员失败");
+        }
+        userClient.updateUserDepartment(new UserDeptJson(json.getMemberId(), 0));
+        User result = userClient.getUserById(json.getMemberId()).unwrap();
+        return DataResult.ok("移除成员成功", result);
+    }
 }

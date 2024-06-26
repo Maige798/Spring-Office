@@ -18,5 +18,5 @@ public interface DepartmentService {
 
     DataResult<User> addMember(ChangeMemberJson json);
 
-
+    DataResult<User> removeMember(ChangeMemberJson json);
 }

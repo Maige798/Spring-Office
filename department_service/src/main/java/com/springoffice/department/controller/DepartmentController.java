@@ -40,4 +40,9 @@ public class DepartmentController {
     public DataResult<User> addMember(@RequestBody ChangeMemberJson json) {
         return departmentService.addMember(json);
     }
+
+    @PutMapping("/members/remove")
+    public DataResult<User> removeMember(@RequestBody ChangeMemberJson json) {
+        return departmentService.removeMember(json);
+    }
 }
