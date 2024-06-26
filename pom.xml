@@ -10,6 +10,7 @@
         <module>gateway_service</module>
         <module>role-service</module>
         <module>department_service</module>
+        <module>message_service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
