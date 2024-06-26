@@ -37,4 +37,14 @@ public class User {
     @TableField(exist = false)
     @JsonProperty("password")
     private String password;
+
+    public User(String name, Integer sex, String phone, String email, Integer status, Integer roleId, Integer deptId) {
+        this.name = name;
+        this.sex = sex;
+        this.phone = phone;
+        this.email = email;
+        this.status = status;
+        this.roleId = roleId;
+        this.deptId = deptId;
+    }
 }

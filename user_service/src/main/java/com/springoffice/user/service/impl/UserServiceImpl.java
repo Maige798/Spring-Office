@@ -1,5 +1,6 @@
 package com.springoffice.user.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.springoffice.global.util.DataResult;
 import com.springoffice.user.entity.Login;
 import com.springoffice.user.entity.User;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service("user-service")
 public class UserServiceImpl implements UserService {
@@ -49,5 +51,19 @@ public class UserServiceImpl implements UserService {
             return DataResult.error("User更新失败", user);
         }
         return DataResult.ok("User更新成功", user);
+    }
+
+    @Override
+    public DataResult<List<User>> getUserList(User user) {
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(user.getName() != null, User::getName, user.getName())
+                .eq(user.getSex() != null, User::getSex, user.getSex())
+                .eq(user.getPhone() != null, User::getPhone, user.getPhone())
+                .eq(user.getEmail() != null, User::getEmail, user.getEmail())
+                .eq(user.getStatus() != null, User::getStatus, user.getStatus())
+                .eq(user.getRoleId() != null, User::getRoleId, user.getRoleId())
+                .eq(user.getDeptId() != null, User::getDeptId, user.getDeptId());
+        List<User> userList = userMapper.selectList(wrapper);
+        return DataResult.ok("User list查询成功", userList);
     }
 }
