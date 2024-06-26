@@ -6,6 +6,7 @@
     <modules>
         <module>global</module>
         <module>user_service</module>
+        <module>feign_api</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
