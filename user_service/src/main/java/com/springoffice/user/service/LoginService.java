@@ -7,5 +7,5 @@ import com.springoffice.user.entity.User;
 public interface LoginService {
     DataResult<Integer> savePassword(Login login);
 
-    DataResult<User> login();
+    DataResult<User> login(Login login);
 }
