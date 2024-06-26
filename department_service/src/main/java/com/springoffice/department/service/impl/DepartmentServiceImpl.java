@@ -21,4 +21,22 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
         return DataResult.ok("创建部门成功", department);
     }
+
+    @Override
+    public DataResult<Department> updateDepartment(Department department) {
+        int resultValue = departmentMapper.updateById(department);
+        if (resultValue <= 0) {
+            return DataResult.error("部门更新失败", department);
+        }
+        return DataResult.ok("部门更新成功", department);
+    }
+
+    @Override
+    public DataResult<Department> getDepartmentById(Integer id) {
+        Department department = departmentMapper.selectById(id);
+        if (department == null) {
+            return DataResult.error("部门查询失败，ID:" + id + "不存在");
+        }
+        return DataResult.ok("部门查询成功", department);
+    }
 }
