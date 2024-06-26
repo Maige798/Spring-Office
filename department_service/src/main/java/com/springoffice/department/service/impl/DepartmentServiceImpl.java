@@ -1,17 +1,22 @@
 package com.springoffice.department.service.impl;
 
+import com.springoffice.department.client.UserClient;
 import com.springoffice.department.entity.Department;
+import com.springoffice.department.entity.User;
 import com.springoffice.department.mapper.DepartmentMapper;
 import com.springoffice.department.service.DepartmentService;
 import com.springoffice.global.util.DataResult;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service("department-service")
 public class DepartmentServiceImpl implements DepartmentService {
     @Resource
     private DepartmentMapper departmentMapper;
+    @Resource
+    private UserClient userClient;
 
     @Override
     public DataResult<Department> createDepartment(Department department) {
@@ -38,5 +43,10 @@ public class DepartmentServiceImpl implements DepartmentService {
             return DataResult.error("部门查询失败，ID:" + id + "不存在");
         }
         return DataResult.ok("部门查询成功", department);
+    }
+
+    @Override
+    public DataResult<List<User>> getDepartmentMembers(Integer id) {
+        return userClient.getUser(id);
     }
 }
