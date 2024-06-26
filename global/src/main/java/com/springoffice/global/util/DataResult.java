@@ -16,6 +16,10 @@ public class DataResult<D> {
         return data;
     }
 
+    public boolean success() {
+        return code.equals(200);
+    }
+
     public static <D> DataResult<D> ok(String message, D data) {
         return new DataResult<>(200, message, data);
     }
