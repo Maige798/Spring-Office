@@ -29,4 +29,9 @@ public class DepartmentController {
     public DataResult<List<User>> getDepartmentMembers(@RequestParam(name = "id") Integer dept_id) {
         return departmentService.getDepartmentMembers(dept_id);
     }
+
+    @GetMapping("/query")
+    public DataResult<Department> getDepartmentById(@RequestParam(name = "id") Integer id) {
+        return departmentService.getDepartmentById(id);
+    }
 }
