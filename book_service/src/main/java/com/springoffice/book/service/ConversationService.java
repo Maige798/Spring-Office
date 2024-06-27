@@ -13,4 +13,6 @@ public interface ConversationService {
     DataResult<Conversation> getConversation(Integer aId, Integer bId);
 
     DataResult<Conversation> getConversationById(Integer id);
+
+    DataResult<Object> deleteConversation(Integer id);
 }

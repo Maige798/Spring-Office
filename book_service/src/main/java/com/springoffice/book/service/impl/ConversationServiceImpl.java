@@ -73,6 +73,15 @@ public class ConversationServiceImpl implements ConversationService {
         return DataResult.ok("Conversation查询成功", conversation);
     }
 
+    @Override
+    public DataResult<Object> deleteConversation(Integer id) {
+        int resultValue = conversationMapper.deleteById(id);
+        if (resultValue <= 0) {
+            return DataResult.error("会话删除失败");
+        }
+        return DataResult.ok("会话删除成功");
+    }
+
     private boolean conversationExists(Conversation conversation) {
         LambdaQueryWrapper<Conversation> wrapperA = new LambdaQueryWrapper<>();
         wrapperA.eq(Conversation::getAId, conversation.getAId())

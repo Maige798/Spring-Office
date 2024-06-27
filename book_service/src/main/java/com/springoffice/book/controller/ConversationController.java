@@ -36,4 +36,9 @@ public class ConversationController {
     public DataResult<Conversation> getConversationById(@RequestParam(name = "id") Integer id) {
         return conversationService.getConversationById(id);
     }
+
+    @DeleteMapping("/delete")
+    public DataResult<Object> deleteConversation(@RequestParam(name = "id") Integer id) {
+        return conversationService.deleteConversation(id);
+    }
 }
