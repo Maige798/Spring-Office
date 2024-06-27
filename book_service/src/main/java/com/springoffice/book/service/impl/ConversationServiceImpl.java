@@ -27,6 +27,7 @@ public class ConversationServiceImpl implements ConversationService {
         if (resultValue <= 0) {
             return DataResult.error("Conversation创建失败", conversation);
         }
+        updateUserName(conversation);
         return DataResult.ok("Conversation创建成功", conversation);
     }
 
@@ -38,6 +39,7 @@ public class ConversationServiceImpl implements ConversationService {
         wrapperB.eq(Conversation::getBId, userId);
         List<Conversation> conversationList = conversationMapper.selectList(wrapperA);
         conversationList.addAll(conversationMapper.selectList(wrapperB));
+        conversationList.forEach(this::updateUserName);
         return DataResult.ok("Conversation List查询成功", conversationList);
     }
 
@@ -57,6 +59,7 @@ public class ConversationServiceImpl implements ConversationService {
         if (targets.isEmpty()) {
             return DataResult.error("Conversation查询失败，ID:(" + aId + ", " + bId + ")之间未创建会话");
         }
+        updateUserName(targets.get(0));
         return DataResult.ok("Conversation查询成功", targets.get(0));
     }
 
@@ -66,6 +69,7 @@ public class ConversationServiceImpl implements ConversationService {
         if (conversation == null) {
             return DataResult.error("Conversation查询失败，ID:" + id + "不存在");
         }
+        updateUserName(conversation);
         return DataResult.ok("Conversation查询成功", conversation);
     }
 
@@ -81,5 +85,10 @@ public class ConversationServiceImpl implements ConversationService {
         wrapperB.eq(Conversation::getAId, conversation.getBId())
                 .eq(Conversation::getBId, conversation.getAId());
         return !conversationMapper.selectList(wrapperB).isEmpty();
+    }
+
+    private void updateUserName(Conversation conversation) {
+        conversation.setAName(userClient.getUserById(conversation.getAId()).unwrap().getName());
+        conversation.setBName(userClient.getUserById(conversation.getBId()).unwrap().getName());
     }
 }
