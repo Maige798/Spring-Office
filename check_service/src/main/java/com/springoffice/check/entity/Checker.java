@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Check {
+public class Checker {
     @TableId(type = IdType.AUTO)
     private Integer id;
     @JsonProperty("creator_id")

@@ -26,6 +26,12 @@ public class CheckIn {
     private String message;
 
     @TableField(exist = false)
-    @JsonProperty("user_name")
-    private String userName;
+    private User user;
+
+    public CheckIn(Integer checkId, Integer userId, Timestamp time, Integer status) {
+        this.checkId = checkId;
+        this.userId = userId;
+        this.time = time;
+        this.status = status;
+    }
 }
