@@ -1,6 +1,8 @@
 package com.springoffice.book.controller;
 
 import com.springoffice.book.entity.Conversation;
+import com.springoffice.book.entity.ConversationMessage;
+import com.springoffice.book.service.ConversationMessageService;
 import com.springoffice.book.service.ConversationService;
 import com.springoffice.global.util.DataResult;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,8 @@ import java.util.List;
 public class ConversationController {
     @Resource
     private ConversationService conversationService;
+    @Resource
+    private ConversationMessageService conversationMessageService;
 
     @PostMapping("/create")
     public DataResult<Conversation> createConversation(@RequestBody Conversation conversation) {
@@ -40,5 +44,10 @@ public class ConversationController {
     @DeleteMapping("/delete")
     public DataResult<Object> deleteConversation(@RequestParam(name = "id") Integer id) {
         return conversationService.deleteConversation(id);
+    }
+
+    @PostMapping("/send")
+    public DataResult<ConversationMessage> sendMessage(@RequestBody ConversationMessage message) {
+        return conversationMessageService.sendMessage(message);
     }
 }

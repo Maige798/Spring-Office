@@ -3,12 +3,18 @@ package com.springoffice.book.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.springoffice.book.client.UserClient;
 import com.springoffice.book.entity.Conversation;
+import com.springoffice.book.entity.ConversationMessage;
+import com.springoffice.book.entity.ConversationOrder;
 import com.springoffice.book.mapper.ConversationMapper;
+import com.springoffice.book.mapper.ConversationMessageMapper;
+import com.springoffice.book.mapper.ConversationOrderMapper;
 import com.springoffice.book.service.ConversationService;
 import com.springoffice.global.util.DataResult;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Comparator;
 import java.util.List;
 
 @Service("conversation-service")
@@ -16,9 +22,14 @@ public class ConversationServiceImpl implements ConversationService {
     @Resource
     private ConversationMapper conversationMapper;
     @Resource
+    private ConversationMessageMapper conversationMessageMapper;
+    @Resource
+    private ConversationOrderMapper conversationOrderMapper;
+    @Resource
     private UserClient userClient;
 
     @Override
+    @Transactional
     public DataResult<Conversation> createConversation(Conversation conversation) {
         if (conversationExists(conversation)) {
             return DataResult.error("Conversation创建失败，已经存在", conversation);
@@ -27,7 +38,11 @@ public class ConversationServiceImpl implements ConversationService {
         if (resultValue <= 0) {
             return DataResult.error("Conversation创建失败", conversation);
         }
-        updateUserName(conversation);
+        updateContents(conversation);
+        int orderResultValue = conversationOrderMapper.insert(new ConversationOrder(conversation.getId(), 1));
+        if (orderResultValue <= 0) {
+            return DataResult.error("Conversation order创建失败", conversation);
+        }
         return DataResult.ok("Conversation创建成功", conversation);
     }
 
@@ -39,7 +54,7 @@ public class ConversationServiceImpl implements ConversationService {
         wrapperB.eq(Conversation::getBId, userId);
         List<Conversation> conversationList = conversationMapper.selectList(wrapperA);
         conversationList.addAll(conversationMapper.selectList(wrapperB));
-        conversationList.forEach(this::updateUserName);
+        conversationList.forEach(this::updateContents);
         return DataResult.ok("Conversation List查询成功", conversationList);
     }
 
@@ -59,7 +74,7 @@ public class ConversationServiceImpl implements ConversationService {
         if (targets.isEmpty()) {
             return DataResult.error("Conversation查询失败，ID:(" + aId + ", " + bId + ")之间未创建会话");
         }
-        updateUserName(targets.get(0));
+        updateContents(targets.get(0));
         return DataResult.ok("Conversation查询成功", targets.get(0));
     }
 
@@ -69,7 +84,7 @@ public class ConversationServiceImpl implements ConversationService {
         if (conversation == null) {
             return DataResult.error("Conversation查询失败，ID:" + id + "不存在");
         }
-        updateUserName(conversation);
+        updateContents(conversation);
         return DataResult.ok("Conversation查询成功", conversation);
     }
 
@@ -96,8 +111,21 @@ public class ConversationServiceImpl implements ConversationService {
         return !conversationMapper.selectList(wrapperB).isEmpty();
     }
 
+    private void updateContents(Conversation conversation) {
+        updateUserName(conversation);
+        updateMessages(conversation);
+    }
+
     private void updateUserName(Conversation conversation) {
         conversation.setAName(userClient.getUserById(conversation.getAId()).unwrap().getName());
         conversation.setBName(userClient.getUserById(conversation.getBId()).unwrap().getName());
+    }
+
+    private void updateMessages(Conversation conversation) {
+        LambdaQueryWrapper<ConversationMessage> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ConversationMessage::getConversationId, conversation.getId());
+        List<ConversationMessage> list = conversationMessageMapper.selectList(wrapper);
+        list.sort(Comparator.comparing(ConversationMessage::getOrderNumber));
+        conversation.setConversationMessages(list);
     }
 }

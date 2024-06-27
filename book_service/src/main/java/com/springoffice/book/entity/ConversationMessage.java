@@ -14,7 +14,8 @@ import java.sql.Timestamp;
 public class ConversationMessage {
     @JsonProperty("conversation_id")
     private Integer conversationId;
-    private Integer order;
+    @JsonProperty("order_number")
+    private Integer orderNumber;
     private Timestamp time;
     @JsonProperty("sender_id")
     private Integer senderId;
