@@ -12,6 +12,7 @@
         <module>department_service</module>
         <module>message_service</module>
         <module>book_service</module>
+        <module>meeting_service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
