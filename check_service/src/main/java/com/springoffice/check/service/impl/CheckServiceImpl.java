@@ -45,7 +45,7 @@ public class CheckServiceImpl implements CheckService {
         if (checker == null) {
             return DataResult.error("Check查询失败，ID:" + id + "不存在");
         }
-        loadCheckInList(checker);
+        loadChecker(checker);
         return DataResult.ok("Check查询成功", checker);
     }
 
@@ -66,7 +66,7 @@ public class CheckServiceImpl implements CheckService {
         LambdaQueryWrapper<Checker> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Checker::getDeptId, deptId);
         List<Checker> checkerList = checkMapper.selectList(wrapper);
-        checkerList.forEach(this::loadCheckInList);
+        checkerList.forEach(this::loadChecker);
         return DataResult.ok("Check list查询成功", checkerList);
     }
 
@@ -118,5 +118,25 @@ public class CheckServiceImpl implements CheckService {
             System.err.println("User ID:" + checkIn.getUserId() + "不存在");
         }
         checkIn.setUser(user);
+    }
+
+    private void countAttendanceRate(Checker checker) {
+        checker.setAttendanceRate((double) 0);
+        if (checker.getCheckInList() == null || checker.getCheckInList().isEmpty())
+            return;
+        double rate = checker.getCheckInList().size();
+        double count = 0;
+        for (CheckIn checkIn : checker.getCheckInList()) {
+            if (checkIn.getStatus().equals(CheckIn.CHECKED)) {
+                count += 1;
+            }
+        }
+        rate = count / rate;
+        checker.setAttendanceRate(rate);
+    }
+
+    private void loadChecker(Checker checker) {
+        loadCheckInList(checker);
+        countAttendanceRate(checker);
     }
 }
