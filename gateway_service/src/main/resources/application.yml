@@ -12,6 +12,30 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/user/**
+        - id: role-service
+          uri: lb://role-service
+          predicates:
+            - Path=/role/**
+        - id: book-service
+          uri: lb://book-service
+          predicates:
+            - Path=/book/**
+        - id: check-service
+          uri: lb://check-service
+          predicates:
+            - Path=/check/**
+        - id: department-service
+          uri: lb://department-service
+          predicates:
+            - Path=/department/**
+        - id: meeting-service
+          uri: lb://meeting-service
+          predicates:
+            - Path=/meeting/**
+        - id: message-service
+          uri: lb://message-service
+          predicates:
+            - Path=/message/**
       globalcors:
         cors-configurations:
           '[/**]':
