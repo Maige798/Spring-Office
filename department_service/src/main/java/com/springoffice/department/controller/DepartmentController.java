@@ -45,4 +45,9 @@ public class DepartmentController {
     public DataResult<User> removeMember(@RequestBody ChangeMemberJson json) {
         return departmentService.removeMember(json);
     }
+
+    @GetMapping("/query/name")
+    public DataResult<String> getDepartmentNameById(@RequestParam(name = "id") Integer id) {
+        return departmentService.getDepartmentNameById(id);
+    }
 }

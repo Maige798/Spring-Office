@@ -77,6 +77,15 @@ public class RoleServiceImpl implements RoleService {
         return DataResult.ok("Role删除成功");
     }
 
+    @Override
+    public DataResult<String> getRoleNameById(Integer id) {
+        Role role = roleMapper.selectById(id);
+        if (role == null) {
+            return DataResult.error("Role name查询失败，ID:" + id + "不存在");
+        }
+        return DataResult.ok("Role name查询成功", role.getName());
+    }
+
     private boolean saveRolePermission(RolePermission rolePermission) {
         return rolePermissionMapper.insert(rolePermission) > 0;
     }

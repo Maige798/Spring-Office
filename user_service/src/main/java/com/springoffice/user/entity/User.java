@@ -43,6 +43,9 @@ public class User {
     @TableField(exist = false)
     @JsonProperty("dept_message")
     private String deptMessage;
+    @TableField(exist = false)
+    @JsonProperty("role_name")
+    private String roleName;
 
     public User(String name, Integer sex, String phone, String email, Integer status, Integer roleId, Integer deptId) {
         this.name = name;

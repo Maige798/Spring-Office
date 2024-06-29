@@ -3,6 +3,7 @@ package com.springoffice.user.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.springoffice.global.util.DataResult;
 import com.springoffice.user.client.DepartmentClient;
+import com.springoffice.user.client.RoleClient;
 import com.springoffice.user.entity.Login;
 import com.springoffice.user.entity.User;
 import com.springoffice.user.entity.client.Department;
@@ -23,6 +24,8 @@ public class UserServiceImpl implements UserService {
     private LoginService loginService;
     @Resource
     private DepartmentClient departmentClient;
+    @Resource
+    private RoleClient roleClient;
 
     @Override
     @Transactional
@@ -53,6 +56,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return DataResult.error("User查询失败，id:" + id + "不存在", null);
         }
+        updateUserMessages(user);
         return DataResult.ok("User查询成功", user);
     }
 
@@ -76,6 +80,12 @@ public class UserServiceImpl implements UserService {
                 .eq(user.getRoleId() != null, User::getRoleId, user.getRoleId())
                 .eq(user.getDeptId() != null, User::getDeptId, user.getDeptId());
         List<User> userList = userMapper.selectList(wrapper);
+        userList.forEach(this::updateUserMessages);
         return DataResult.ok("User list查询成功", userList);
+    }
+
+    private void updateUserMessages(User user) {
+        user.setDeptName(departmentClient.getDepartmentNameById(user.getDeptId()).unwrap());
+        user.setRoleName(roleClient.getRoleNameById(user.getRoleId()).unwrap());
     }
 }

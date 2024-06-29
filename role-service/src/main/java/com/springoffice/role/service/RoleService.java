@@ -15,4 +15,6 @@ public interface RoleService {
     DataResult<Role> updateRole(Role role);
 
     DataResult<Object> deleteRole(Integer id);
+
+    DataResult<String> getRoleNameById(Integer id);
 }

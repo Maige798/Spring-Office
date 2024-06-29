@@ -2,6 +2,8 @@ package com.springoffice.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.springoffice.global.util.DataResult;
+import com.springoffice.user.client.DepartmentClient;
+import com.springoffice.user.client.RoleClient;
 import com.springoffice.user.entity.Login;
 import com.springoffice.user.entity.User;
 import com.springoffice.user.mapper.LoginMapper;
@@ -18,6 +20,10 @@ public class LoginServiceImpl implements LoginService {
     private LoginMapper loginMapper;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private DepartmentClient departmentClient;
+    @Resource
+    private RoleClient roleClient;
 
     @Override
     public DataResult<Integer> savePassword(Login login) {
@@ -41,6 +47,12 @@ public class LoginServiceImpl implements LoginService {
         if (user == null) { // maybe unreachable
             return DataResult.error("出现了神秘的数据库数据不一致错误", null);
         }
+        updateUserMessages(user);
         return DataResult.ok("登录成功", user);
+    }
+
+    private void updateUserMessages(User user) {
+        user.setDeptName(departmentClient.getDepartmentNameById(user.getDeptId()).unwrap());
+        user.setRoleName(roleClient.getRoleNameById(user.getRoleId()).unwrap());
     }
 }

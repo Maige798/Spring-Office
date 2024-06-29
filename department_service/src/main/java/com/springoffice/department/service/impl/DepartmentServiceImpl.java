@@ -24,27 +24,27 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DataResult<Department> createDepartment(Department department) {
         int resultValue = departmentMapper.insert(department);
         if (resultValue <= 0) {
-            return DataResult.error("创建部门失败", department);
+            return DataResult.error("Department创建失败", department);
         }
-        return DataResult.ok("创建部门成功", department);
+        return DataResult.ok("Department创建成功", department);
     }
 
     @Override
     public DataResult<Department> updateDepartment(Department department) {
         int resultValue = departmentMapper.updateById(department);
         if (resultValue <= 0) {
-            return DataResult.error("部门更新失败", department);
+            return DataResult.error("Department更新失败", department);
         }
-        return DataResult.ok("部门更新成功", department);
+        return DataResult.ok("Department更新成功", department);
     }
 
     @Override
     public DataResult<Department> getDepartmentById(Integer id) {
         Department department = departmentMapper.selectById(id);
         if (department == null) {
-            return DataResult.error("部门查询失败，ID:" + id + "不存在");
+            return DataResult.error("Department查询失败，ID:" + id + "不存在");
         }
-        return DataResult.ok("部门查询成功", department);
+        return DataResult.ok("Department查询成功", department);
     }
 
     @Override
@@ -78,5 +78,14 @@ public class DepartmentServiceImpl implements DepartmentService {
         userClient.updateUserDepartment(new UserDeptJson(json.getMemberId(), 0));
         User result = userClient.getUserById(json.getMemberId()).unwrap();
         return DataResult.ok("移除成员成功", result);
+    }
+
+    @Override
+    public DataResult<String> getDepartmentNameById(Integer id) {
+        Department department = departmentMapper.selectById(id);
+        if (department == null) {
+            return DataResult.error("Department name查询失败，ID:" + id + "不存在");
+        }
+        return DataResult.ok("Department name查询成功", department.getName());
     }
 }

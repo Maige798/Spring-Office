@@ -38,4 +38,9 @@ public class RoleController {
     public DataResult<Object> updateRole(@RequestParam(name = "id") Integer id) {
         return roleService.deleteRole(id);
     }
+
+    @GetMapping("/query/name")
+    public DataResult<String> getRoleNameById(@RequestParam(name = "id") Integer id) {
+        return roleService.getRoleNameById(id);
+    }
 }
