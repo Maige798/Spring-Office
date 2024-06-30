@@ -1,5 +1,6 @@
 package com.springoffice.check.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public class User {
     @JsonProperty("hire_date")
     private Date hireDate;
     @JsonProperty("create_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp createTime;
     private Integer status;
     @JsonProperty("role_id")

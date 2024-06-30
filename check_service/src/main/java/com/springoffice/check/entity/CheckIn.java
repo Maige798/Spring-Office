@@ -1,6 +1,7 @@
 package com.springoffice.check.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class CheckIn {
     private Integer checkId;
     @JsonProperty("user_id")
     private Integer userId;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp time;
     private Integer status;
     private String message;
