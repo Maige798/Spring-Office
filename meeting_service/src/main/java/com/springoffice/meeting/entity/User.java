@@ -1,11 +1,9 @@
 package com.springoffice.meeting.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -23,9 +21,6 @@ public class User {
     private String email;
     @JsonProperty("hire_date")
     private Date hireDate;
-    @JsonProperty("create_time")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Timestamp createTime;
     private Integer status;
     @JsonProperty("role_id")
     private Integer roleId;
