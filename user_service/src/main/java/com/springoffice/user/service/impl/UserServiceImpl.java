@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service("user-service")
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public DataResult<User> register(User user, boolean isAdmin) {
         user.setIsAdmin(isAdmin ? 1 : 0);
-        System.out.println(user);
+        initRegisterUser(user);
         int resultValue = userMapper.insert(user);
         if (resultValue <= 0) {
             return DataResult.error("User创建失败", null);
@@ -87,5 +88,10 @@ public class UserServiceImpl implements UserService {
     private void updateUserMessages(User user) {
         user.setDeptName(departmentClient.getDepartmentNameById(user.getDeptId()).unwrap());
         user.setRoleName(roleClient.getRoleNameById(user.getRoleId()).unwrap());
+    }
+
+    private void initRegisterUser(User user) {
+        user.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        user.setStatus(0);
     }
 }

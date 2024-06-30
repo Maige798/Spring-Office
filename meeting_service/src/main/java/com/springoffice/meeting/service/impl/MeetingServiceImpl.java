@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +35,7 @@ public class MeetingServiceImpl implements MeetingService {
     @Transactional
     public DataResult<Meeting> createMeeting(Meeting meeting) {
         meeting.setStatus(0);
+        meeting.setCreateTime(new Timestamp(System.currentTimeMillis()));
         int resultValue = meetingMapper.insert(meeting);
         if (resultValue <= 0) {
             return DataResult.error("Meeting创建失败", meeting);
