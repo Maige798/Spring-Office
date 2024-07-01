@@ -80,6 +80,14 @@ public class MeetingServiceImpl implements MeetingService {
             if (idSet.contains(meeting.getId())) continue;
             meetingList.add(meeting);
         }
+        meetingList.forEach(this::loadCreator);
+        return DataResult.ok("Meeting list查询成功", meetingList);
+    }
+
+    @Override
+    public DataResult<List<Meeting>> getCreateMeetingListByUserId(Integer userId) {
+        List<Meeting> meetingList = getCreateMeetingByUserId(userId);
+        meetingList.forEach(this::loadCreator);
         return DataResult.ok("Meeting list查询成功", meetingList);
     }
 
@@ -89,6 +97,7 @@ public class MeetingServiceImpl implements MeetingService {
         wrapper.eq(Meeting::getDeptId, deptId);
         List<Meeting> meetingList = meetingMapper.selectList(wrapper);
         meetingList.forEach(this::getAttenderList);
+        meetingList.forEach(this::loadCreator);
         return DataResult.ok("Meeting list查询成功", meetingList);
     }
 
@@ -185,6 +194,11 @@ public class MeetingServiceImpl implements MeetingService {
             meetingList.add(getMeetingById(attendance.getMeetingId()).unwrap());
         }
         return meetingList;
+    }
+
+    private void loadCreator(Meeting meeting) {
+        User creator = userClient.getUserById(meeting.getCreatorId()).unwrap();
+        meeting.setCreator(creator);
     }
 
     private boolean dealCheckJson(Meeting meeting, CheckMeetingJson json) {

@@ -15,6 +15,8 @@ public interface MeetingService {
 
     DataResult<List<Meeting>> getMeetingListByUserId(Integer userId);
 
+    DataResult<List<Meeting>> getCreateMeetingListByUserId(Integer userId);
+
     DataResult<List<Meeting>> getMeetingListByDeptId(Integer deptId);
 
     DataResult<Object> deleteMeeting(Integer id);

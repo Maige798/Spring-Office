@@ -40,6 +40,11 @@ public class MeetingController {
         return meetingService.getMeetingListByUserId(userId);
     }
 
+    @GetMapping("/query/user_create")
+    DataResult<List<Meeting>> getCreateMeetingByUserId(@RequestParam(name = "id") Integer userId) {
+        return meetingService.getCreateMeetingListByUserId(userId);
+    }
+
     @GetMapping("/query/department")
     DataResult<List<Meeting>> getMeetingByDeptId(@RequestParam(name = "id") Integer deptId) {
         return meetingService.getMeetingListByDeptId(deptId);
