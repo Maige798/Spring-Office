@@ -34,8 +34,8 @@ public class RoleController {
         return roleService.updateRole(role);
     }
 
-    @DeleteMapping("/delete")
-    public DataResult<Object> updateRole(@RequestParam(name = "id") Integer id) {
+    @DeleteMapping("/delete/{id}")
+    public DataResult<Object> updateRole(@PathVariable("id") Integer id) {
         return roleService.deleteRole(id);
     }
 
