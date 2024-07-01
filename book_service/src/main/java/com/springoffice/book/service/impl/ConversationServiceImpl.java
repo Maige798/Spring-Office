@@ -65,6 +65,7 @@ public class ConversationServiceImpl implements ConversationService {
                 .eq(Conversation::getBId, bId);
         List<Conversation> targets = conversationMapper.selectList(wrapperA);
         if (!targets.isEmpty()) {
+            updateContents(targets.get(0));
             return DataResult.ok("Conversation查询成功", targets.get(0));
         }
         LambdaQueryWrapper<Conversation> wrapperB = new LambdaQueryWrapper<>();
@@ -72,7 +73,10 @@ public class ConversationServiceImpl implements ConversationService {
                 .eq(Conversation::getBId, aId);
         targets.addAll(conversationMapper.selectList(wrapperB));
         if (targets.isEmpty()) {
-            return DataResult.error("Conversation查询失败，ID:(" + aId + ", " + bId + ")之间未创建会话");
+            Conversation conversation = new Conversation();
+            conversation.setAId(aId);
+            conversation.setBId(bId);
+            return createConversation(conversation);
         }
         updateContents(targets.get(0));
         return DataResult.ok("Conversation查询成功", targets.get(0));

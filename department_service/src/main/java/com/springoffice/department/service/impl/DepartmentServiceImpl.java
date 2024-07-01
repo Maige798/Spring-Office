@@ -72,6 +72,9 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (user == null) {
             return DataResult.error("账号:" + json.getMemberId() + "不存在，移除成员失败");
         }
+        if (user.getIsAdmin().equals(1)) {
+            return DataResult.error("账号:" + json.getMemberId() + "是部门管理员，移除成员失败");
+        }
         if (!user.getDeptId().equals(json.getDeptId())) {
             return DataResult.error("账号:" + json.getMemberId() + "不属于该部门，移除成员失败");
         }

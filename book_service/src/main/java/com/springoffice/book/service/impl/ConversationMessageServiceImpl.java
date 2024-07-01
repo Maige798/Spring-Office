@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 
 @Service("conversation-message-service")
 public class ConversationMessageServiceImpl implements ConversationMessageService {
@@ -25,6 +26,7 @@ public class ConversationMessageServiceImpl implements ConversationMessageServic
     @Override
     @Transactional
     public DataResult<ConversationMessage> sendMessage(ConversationMessage message) {
+        message.setTime(new Timestamp(System.currentTimeMillis()));
         Conversation conversation = conversationMapper.selectById(message.getConversationId());
         if (conversation == null) {
             return DataResult.error("Conversation Message发送失败，Conversation ID不存在", message);

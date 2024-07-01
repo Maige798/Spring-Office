@@ -1,8 +1,10 @@
 package com.springoffice.message.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -22,6 +24,10 @@ public class Message {
     private Timestamp time;
     private Integer checked;
     private String content;
+
+    @TableField(exist = false)
+    @JsonProperty("origin_name")
+    private String originName;
 
     public Message(Integer origin, Integer target, Integer kind, Timestamp time, Integer checked, String content) {
         this.origin = origin;

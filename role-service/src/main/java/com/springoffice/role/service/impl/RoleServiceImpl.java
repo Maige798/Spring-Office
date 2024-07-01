@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service("role-service")
@@ -57,6 +58,8 @@ public class RoleServiceImpl implements RoleService {
         LambdaQueryWrapper<Role> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(deptId != null, Role::getDeptId, deptId);
         List<Role> list = roleMapper.selectList(wrapper);
+        list.add(getRoleById(0).unwrap());
+        list.sort(Comparator.comparing(Role::getId));
         list.forEach(this::loadPermissions);
         return DataResult.ok("Role list查询成功", list);
     }

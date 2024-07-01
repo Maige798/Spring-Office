@@ -20,6 +20,7 @@ public class User {
     @TableId(type = IdType.AUTO)
     private Integer id;
     private String name;
+    @JsonProperty("is_admin")
     private Integer isAdmin;
     private String photo;
     private Integer sex;

@@ -1,4 +1,4 @@
-package com.springoffice.book.entity;
+package com.springoffice.message.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -26,6 +26,4 @@ public class User {
     private Integer roleId;
     @JsonProperty("dept_id")
     private Integer deptId;
-    @JsonProperty("dept_name")
-    private String deptName;
 }
