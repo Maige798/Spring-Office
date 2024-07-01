@@ -25,8 +25,8 @@ public class MeetingController {
         return meetingService.updateMeeting(meeting);
     }
 
-    @DeleteMapping("/delete")
-    DataResult<Object> deleteMeeting(@RequestParam(name = "id") Integer id) {
+    @DeleteMapping("/delete/{id}")
+    DataResult<Object> deleteMeeting(@PathVariable("id") Integer id) {
         return meetingService.deleteMeeting(id);
     }
 

@@ -2,6 +2,7 @@ package com.springoffice.book.controller;
 
 import com.springoffice.book.entity.Contact;
 import com.springoffice.book.entity.User;
+import com.springoffice.book.entity.json.DeleteContactJson;
 import com.springoffice.book.service.ContactService;
 import com.springoffice.global.util.DataResult;
 import org.springframework.web.bind.annotation.*;
@@ -25,11 +26,8 @@ public class ContactController {
         return contactService.getContactList(userId);
     }
 
-    @DeleteMapping("/delete")
-    public DataResult<Object> deleteContact(
-            @RequestParam(name = "user_id") Integer userId,
-            @RequestParam(name = "contact_id") Integer contactId
-    ) {
-        return contactService.deleteContact(userId, contactId);
+    @PostMapping("/delete")
+    public DataResult<Object> deleteContact(@RequestBody DeleteContactJson json) {
+        return contactService.deleteContact(json.getUserId(), json.getContactId());
     }
 }

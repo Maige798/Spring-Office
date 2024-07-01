@@ -30,8 +30,8 @@ public class MessageController {
         return messageService.sendMessages(json);
     }
 
-    @DeleteMapping("/delete")
-    public DataResult<Object> deleteMessage(@RequestParam(name = "id") Integer id) {
+    @DeleteMapping("/delete/{id}")
+    public DataResult<Object> deleteMessage(@PathVariable("id") Integer id) {
         return messageService.deleteMessage(id);
     }
 }
