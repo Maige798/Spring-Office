@@ -12,5 +12,7 @@ public interface CheckService {
 
     DataResult<List<Checker>> getCheckListByUser(Integer userId);
 
+    DataResult<List<Checker>> getUncheckedListByUser(Integer userId);
+
     DataResult<List<Checker>> getCheckListByDepartment(Integer deptId);
 }

@@ -29,6 +29,11 @@ public class CheckController {
         return checkService.getCheckListByUser(userId);
     }
 
+    @GetMapping("/list/unchecked")
+    public DataResult<List<Checker>> getUncheckedByUser(@RequestParam(name = "id") Integer userId) {
+        return checkService.getUncheckedListByUser(userId);
+    }
+
     @GetMapping("/list/department")
     public DataResult<List<Checker>> getCheckByDepartment(@RequestParam(name = "id") Integer deptId) {
         return checkService.getCheckListByDepartment(deptId);

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service("check-service")
@@ -53,6 +54,19 @@ public class CheckServiceImpl implements CheckService {
     public DataResult<List<Checker>> getCheckListByUser(Integer userId) {
         LambdaQueryWrapper<CheckIn> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(CheckIn::getUserId, userId);
+        List<CheckIn> checkInList = checkInMapper.selectList(wrapper);
+        List<Checker> checkerList = new ArrayList<>();
+        for (CheckIn checkIn : checkInList) {
+            checkerList.add(getCheckById(checkIn.getCheckId()).unwrap());
+        }
+        return DataResult.ok("Check list查询成功", checkerList);
+    }
+
+    @Override
+    public DataResult<List<Checker>> getUncheckedListByUser(Integer userId) {
+        LambdaQueryWrapper<CheckIn> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(CheckIn::getUserId, userId)
+                .in(CheckIn::getStatus, Arrays.asList(0, 3));
         List<CheckIn> checkInList = checkInMapper.selectList(wrapper);
         List<Checker> checkerList = new ArrayList<>();
         for (CheckIn checkIn : checkInList) {
