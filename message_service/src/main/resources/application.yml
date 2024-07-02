@@ -14,10 +14,6 @@ spring:
       server-addr: localhost:8848
       discovery:
         cluster-name: HZ
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
 
 mybatis-plus:
   mapper-locations: classpath:mappers/*.xml
