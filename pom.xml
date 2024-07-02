@@ -15,6 +15,7 @@
         <module>meeting_service</module>
         <module>check_service</module>
         <module>document_service</module>
+        <module>fish_service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -40,6 +40,10 @@ spring:
           uri: lb://document-service
           predicates:
             - Path=/document/**
+        - id: fish-service
+          uri: lb://fish-service
+          predicates:
+            - Path=/fish/**
       globalcors:
         cors-configurations:
           '[/**]':
