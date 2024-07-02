@@ -151,6 +151,16 @@ public class CheckServiceImpl implements CheckService {
 
     private void loadChecker(Checker checker) {
         loadCheckInList(checker);
+        loadCheckCreatorName(checker);
         countAttendanceRate(checker);
+    }
+
+    private void loadCheckCreatorName(Checker checker) {
+        User creator = userClient.getUserById(checker.getCreatorId()).unwrap();
+        if (creator == null) {
+            System.err.println("Check creator ID:" + checker.getCreatorId() + "不存在");
+            return;
+        }
+        checker.setCreatorName(creator.getName());
     }
 }

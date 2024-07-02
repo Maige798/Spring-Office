@@ -37,4 +37,7 @@ public class Checker {
     @TableField(exist = false)
     @JsonProperty("attendance_rate")
     private Double attendanceRate;
+    @TableField(exist = false)
+    @JsonProperty("creator_name")
+    private String creatorName;
 }
