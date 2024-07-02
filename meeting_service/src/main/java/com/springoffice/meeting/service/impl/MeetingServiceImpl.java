@@ -107,7 +107,7 @@ public class MeetingServiceImpl implements MeetingService {
         if (resultValue <= 0) {
             return DataResult.error("Meeting删除失败");
         }
-        return DataResult.error("Meeting删除成功");
+        return DataResult.ok("Meeting删除成功");
     }
 
     @Override
