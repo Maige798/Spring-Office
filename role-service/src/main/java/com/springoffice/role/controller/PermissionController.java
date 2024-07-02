@@ -17,8 +17,13 @@ public class PermissionController {
     @Resource
     private PermissionService permissionService;
 
-    @GetMapping("/permission_list")
+    @GetMapping("/permission/list")
     public DataResult<List<Permission>> getPermissionList(@RequestParam(name = "id", required = false) Integer id) {
         return permissionService.permissionList(id);
+    }
+
+    @GetMapping("/permission/user")
+    public DataResult<List<Permission>> getUserPermissionList(@RequestParam(name = "user_id") Integer userId) {
+        return permissionService.getPermissionListByUserId(userId);
     }
 }

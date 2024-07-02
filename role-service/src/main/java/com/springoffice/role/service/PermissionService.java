@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface PermissionService {
     DataResult<List<Permission>> permissionList(Integer id);
+
+    DataResult<List<Permission>> getPermissionListByUserId(Integer userId);
 }
