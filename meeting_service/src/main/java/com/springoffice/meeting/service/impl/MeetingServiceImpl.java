@@ -41,7 +41,6 @@ public class MeetingServiceImpl implements MeetingService {
             return DataResult.error("Meeting创建失败", meeting);
         }
         String saveAttenderMessage = saveAttenderList(meeting);
-        // todo 向审核人员发送待审消息
         return DataResult.ok("Meeting创建成功" + saveAttenderMessage, meeting);
     }
 
@@ -54,7 +53,6 @@ public class MeetingServiceImpl implements MeetingService {
         }
         removeAttenderList(meeting.getId());
         String saveAttenderMessage = saveAttenderList(meeting);
-        // todo 向审核人员发送待审消息
         return DataResult.ok("Meeting更新成功" + saveAttenderMessage, meeting);
     }
 
